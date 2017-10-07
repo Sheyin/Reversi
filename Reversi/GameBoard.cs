@@ -21,6 +21,12 @@ public class GameBoard
                 board[i, j] = ' ';
             }
         }
+
+        // Add the starting pieces in the center
+        board[3, 3] = 'w';
+        board[3, 4] = 'b';
+        board[4, 3] = 'b';
+        board[4, 4] = 'w';
     }
 
     // Display the game board in the console.
@@ -65,7 +71,7 @@ public class GameBoard
         }
     }
 
-    bool isLegalMove(char newPiece, int row, int col)
+    public bool isLegalMove(char newPiece, int row, int col)
     {
         // Check if position is blank / unclaimed
         if (this.board[row, col] != ' ') {
@@ -96,14 +102,25 @@ public class GameBoard
     {
         ArrayList array = new ArrayList();
 
-        while (newRow >= 0 && newCol >= 0 && newRow < ROWS && newCol < COLS)
+        // if the first adjacent spot in the indicated direction is a space or border, the array is empty.
+        newRow += rowModifier;
+        newCol += colModifier;
+        if (board[newRow, newCol] == ' ' || newRow < 0 || newRow >= ROWS || newCol < 0 || newCol >= COLS)
         {
-            newRow += rowModifier;
-            newCol += colModifier;
-            array.Add(board[newRow, newCol]);
+            return array;
         }
 
-        return array;
+        else
+        {
+            do
+            {
+                newRow += rowModifier;
+                newCol += colModifier;
+                array.Add(board[newRow, newCol]);
+            } while (newRow > 0 && newCol > 0 && newRow < ROWS-1 && newCol < COLS-1);
+
+            return array;
+        }
     }
 
     bool checkDirection(char newPiece, int newRow, int newCol, string direction)
