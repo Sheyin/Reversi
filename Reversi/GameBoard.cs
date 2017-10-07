@@ -53,6 +53,35 @@ public class GameBoard
      
 	}
 
+    // Updates board temporarily and displays the to-be move.
+    public void updateBoardTemp(char color, int row, int col)
+    {
+        char[,] boardTemp = (char [,]) board.Clone();
+        boardTemp[row, col] = 'X';
+
+        // should REALLY redo the print function to allow this and recycle code
+        // But I'm lazy for now
+
+        // print column numbers first
+        Console.Write("  ");
+        for (int k = 1; k <= COLS; k++)
+        {
+            Console.Write(" " + k + " ");
+        }
+        Console.Write('\n');
+
+        // print the rest of the board data
+        for (int i = 0; i < COLS; i++)
+        {
+            Console.Write(i + 1 + " ");
+            for (int j = 0; j < ROWS; j++)
+            {
+                Console.Write("[" + boardTemp[i, j] + "]");
+            }
+            Console.Write('\n');
+        }
+    }
+
     // Returns true or false depending on whether the move was actually made.
     // May want to move error message to the function calling the move.
     public bool placePiece(char color, int row, int col)
@@ -75,6 +104,7 @@ public class GameBoard
     {
         // Check if position is blank / unclaimed
         if (this.board[row, col] != ' ') {
+            Console.WriteLine("Error, this position is already occupied by [" + board[row, col] + "].");
             return false;
         }
 
@@ -112,6 +142,7 @@ public class GameBoard
 
         else
         {
+            array.Add(board[newRow, newCol]);
             do
             {
                 newRow += rowModifier;
@@ -185,8 +216,14 @@ public class GameBoard
                 }
             }
 
-            else if (array[i].Equals(' ')) {
+            else if (array[i].Equals(' '))
+            {
                 return false;
+            }
+
+            else
+            {
+                numOpposingColor++;
             }
         }
         return false;

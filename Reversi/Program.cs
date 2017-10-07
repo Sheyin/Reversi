@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hello
+namespace Reversi
 {
     class Reversi
     {
@@ -25,6 +25,7 @@ namespace Hello
                 move = getInput();
                 row = move.Item1;
                 col = move.Item2;
+                game.updateBoardTemp('b', row-1, col-1);
                 Console.WriteLine("Location selected: Row " + row + ", Column " + col);
                 Console.Write("Is this correct? ");
                 confirm = Console.ReadKey().KeyChar;
@@ -39,6 +40,7 @@ namespace Hello
             {
                 Console.WriteLine("A valid move was made.");
                 // modify board etc
+                game.print();
             }
 
             
